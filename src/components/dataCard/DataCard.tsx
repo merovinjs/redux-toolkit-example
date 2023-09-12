@@ -1,11 +1,25 @@
+import { useDispatch } from "react-redux";
 import styles from "./styles.module.css";
 import { useState } from "react";
+import { deleteDataFunc } from "../../redux/dataSlice";
+import { modalFunc } from "../../redux/modalSlice";
+import { useNavigate } from "react-router-dom";
 interface Props {
   data: any;
 }
 const DataCard = ({ data }: Props) => {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [openedit, setOpenedit] = useState(false);
-  console.log({ data });
+  //console.log({ data });
+  console.log(location);
+  const updateFunc = () => {
+    dispatch(modalFunc());
+
+    setOpenedit(false);
+    navigate(`/?update=${data.id}`);
+  };
+
   return (
     <div className={styles.baseContainer}>
       <div className={styles.container}>
@@ -18,8 +32,8 @@ const DataCard = ({ data }: Props) => {
       <div>
         {openedit && (
           <div className={styles.editcontainer}>
-            <div>Edit</div>
-            <div>delete</div>
+            <div onClick={updateFunc}>Edit</div>
+            <div onClick={() => dispatch(deleteDataFunc(data?.id))}>delete</div>
           </div>
         )}
       </div>

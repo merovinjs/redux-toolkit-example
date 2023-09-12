@@ -1,7 +1,7 @@
+import { sortDataFunc } from "../../redux/dataSlice";
 import { modalFunc } from "../../redux/modalSlice";
 import styles from "./styles.module.css";
 import { useDispatch } from "react-redux";
-import { useSelector } from "react-redux";
 const Header = () => {
   const dispatch = useDispatch();
 
@@ -10,9 +10,13 @@ const Header = () => {
       <h1>React Redux Toolkit Example App</h1>
       <div className={styles.searchContainer}>
         <div>
-          <select name="" id="">
-            <option value="1">Option 1</option>
-            <option value="2">Option 2</option>
+          <select
+            onChange={(e) => dispatch(sortDataFunc(e.target.value))}
+            name=""
+            id=""
+          >
+            <option value="asc">Artan</option>
+            <option value="desc">Azalan</option>
           </select>
         </div>
 

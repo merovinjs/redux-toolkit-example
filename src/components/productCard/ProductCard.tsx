@@ -1,24 +1,32 @@
 import { useDispatch, useSelector } from "react-redux";
 import styles from "./styles.module.css";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Modal from "../modal/Modal";
 import Input from "../input/Input";
 import Button from "../button/button";
-import { createDataFunc } from "../../redux/dataSlice";
+import { createDataFunc, updateDataFunc } from "../../redux/dataSlice";
 import { modalFunc } from "../../redux/modalSlice";
 import DataCard from "../dataCard/DataCard";
+import { useLocation, useNavigate } from "react-router-dom";
 const ProductCard = () => {
   const { value } = useSelector((state: any) => state.modal);
   const { data } = useSelector((state: any) => state.data);
+  const location = useLocation();
+  const navigate = useNavigate();
   console.log(data);
 
-  const [product, setProduct] = useState({ name: "", price: "", url: "" });
+  const [product, setProduct] = useState({
+    name: "",
+    price: "",
+    url: "",
+  });
 
   const dispatch = useDispatch();
   const btnFunction = () => {
-    dispatch(createDataFunc(product));
+    dispatch(createDataFunc({ ...product, id: data.length + 1 }));
     dispatch(modalFunc());
   };
+
   const onChanegeInput = (
     e: React.ChangeEvent<HTMLInputElement>,
     name: string
@@ -36,10 +44,24 @@ const ProductCard = () => {
       }));
     }
   };
+  let loc = location.search.split("=")[1];
+  useEffect(() => {
+    if (loc) {
+      setProduct(data.find((data: any) => data.id == loc));
+    }
+  }, [loc]);
 
+  const btnUpdateFunc = () => {
+    dispatch(updateDataFunc({ ...product, id: loc }));
+    dispatch(modalFunc());
+    navigate("/");
+  };
+
+  console.log(loc);
   const contentModel = (
     <>
       <Input
+        value={product.name}
         type="text"
         placeholder="ürün ekle"
         id="name"
@@ -47,6 +69,7 @@ const ProductCard = () => {
         onChange={(e) => onChanegeInput(e, "name")}
       />
       <Input
+        value={product.price}
         type="text"
         placeholder="FiyatSeç"
         id="price"
@@ -60,7 +83,10 @@ const ProductCard = () => {
         name="url"
         onChange={(e) => onChanegeInput(e, "url")}
       />
-      <Button onClick={btnFunction} btnText="seflam" />
+      <Button
+        onClick={loc ? btnUpdateFunc : btnFunction}
+        btnText={loc ? "Edit" : "Add"}
+      />
     </>
   );
 
@@ -71,7 +97,7 @@ const ProductCard = () => {
           <DataCard key={index} data={data} />
         ))}
       </div>
-      {value && <Modal title="selsdaam" content={contentModel} />}
+      {value && <Modal title={loc ? "Edit" : "Add"} content={contentModel} />}
     </div>
   );
 };
