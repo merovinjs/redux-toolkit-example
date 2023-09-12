@@ -3,11 +3,12 @@ import styles from "./styles.module.css";
 import { useState, useEffect } from "react";
 import Modal from "../modal/Modal";
 import Input from "../input/Input";
-import Button from "../button/button";
+
 import { createDataFunc, updateDataFunc } from "../../redux/dataSlice";
 import { modalFunc } from "../../redux/modalSlice";
 import DataCard from "../dataCard/DataCard";
 import { useLocation, useNavigate } from "react-router-dom";
+import Button from "../button/Button";
 const ProductCard = () => {
   const { value } = useSelector((state: any) => state.modal);
   const { data } = useSelector((state: any) => state.data);
