@@ -1,4 +1,4 @@
-import { sortDataFunc } from "../../redux/dataSlice";
+import { searchDataFunc, sortDataFunc } from "../../redux/dataSlice";
 import { modalFunc } from "../../redux/modalSlice";
 import styles from "./styles.module.css";
 import { useDispatch } from "react-redux";
@@ -21,7 +21,13 @@ const Header = () => {
         </div>
 
         <div>
-          <input type="text" placeholder="Search" />
+          <input
+            onChange={(e) =>
+              dispatch(searchDataFunc(e.target.value.toLowerCase().trim()))
+            }
+            type="text"
+            placeholder="Search"
+          />
         </div>
         <div onClick={() => dispatch(modalFunc())}>
           <b>X</b>

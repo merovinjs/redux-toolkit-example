@@ -6,6 +6,7 @@ import { modalFunc } from "../../redux/modalSlice";
 import { useNavigate } from "react-router-dom";
 interface Props {
   data: any;
+  keyword?: string;
 }
 const DataCard = ({ data }: Props) => {
   const navigate = useNavigate();

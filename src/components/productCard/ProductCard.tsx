@@ -11,7 +11,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import Button from "../button/Button";
 const ProductCard = () => {
   const { value } = useSelector((state: any) => state.modal);
-  const { data } = useSelector((state: any) => state.data);
+  const { data, keyword } = useSelector((state: any) => state.data);
   const location = useLocation();
   const navigate = useNavigate();
   console.log(data);
@@ -90,11 +90,14 @@ const ProductCard = () => {
       />
     </>
   );
+  const filteredItems = data.filter((item: any) =>
+    item.name.toLowerCase().includes(keyword.toLowerCase())
+  );
 
   return (
     <div>
       <div className={styles.cards}>
-        {data?.map((data: any, index: number) => (
+        {filteredItems?.map((data: any, index: number) => (
           <DataCard key={index} data={data} />
         ))}
       </div>

@@ -3,14 +3,17 @@ import type { PayloadAction } from "@reduxjs/toolkit";
 
 export interface DataState {
   data: any[];
+  keyword: string;
 }
 
 const initialState: DataState = {
   data: [],
+  keyword: "",
 };
 
 export const dataSlice = createSlice({
   name: "data",
+
   initialState,
   reducers: {
     createDataFunc: (state, action: PayloadAction<any>) => {
@@ -37,11 +40,19 @@ export const dataSlice = createSlice({
         ),
       ];
     },
+    searchDataFunc: (state, action: PayloadAction<any>) => {
+      state.keyword = action.payload;
+    },
   },
 });
 
 // Action creators are generated for each case reducer function
-export const { createDataFunc, deleteDataFunc, updateDataFunc, sortDataFunc } =
-  dataSlice.actions;
+export const {
+  createDataFunc,
+  deleteDataFunc,
+  updateDataFunc,
+  sortDataFunc,
+  searchDataFunc,
+} = dataSlice.actions;
 
 export default dataSlice.reducer;
