@@ -13,7 +13,6 @@ const initialState: DataState = {
 
 export const dataSlice = createSlice({
   name: "data",
-
   initialState,
   reducers: {
     createDataFunc: (state, action: PayloadAction<any>) => {

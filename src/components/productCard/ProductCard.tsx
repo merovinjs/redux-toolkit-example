@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useDispatch, useSelector } from "react-redux";
 import styles from "./styles.module.css";
 import { useState, useEffect } from "react";
@@ -28,10 +29,7 @@ const ProductCard = () => {
     dispatch(modalFunc());
   };
 
-  const onChanegeInput = (
-    e: React.ChangeEvent<HTMLInputElement>,
-    name: string
-  ) => {
+  const onChanegeInput = (e: React.ChangeEvent<HTMLInputElement>, name: string) => {
     const { value, files } = e.target;
     if (name === "url" && files && files[0]) {
       setProduct((prev) => ({
@@ -45,7 +43,7 @@ const ProductCard = () => {
       }));
     }
   };
-  let loc = location.search.split("=")[1];
+  const loc = location.search.split("=")[1];
   useEffect(() => {
     if (loc) {
       setProduct(data.find((data: any) => data.id == loc));
@@ -61,38 +59,13 @@ const ProductCard = () => {
   console.log(loc);
   const contentModel = (
     <>
-      <Input
-        value={product.name}
-        type="text"
-        placeholder="ürün ekle"
-        id="name"
-        name="name"
-        onChange={(e) => onChanegeInput(e, "name")}
-      />
-      <Input
-        value={product.price}
-        type="text"
-        placeholder="FiyatSeç"
-        id="price"
-        name="price"
-        onChange={(e) => onChanegeInput(e, "price")}
-      />
-      <Input
-        type="file"
-        placeholder="Resim seç"
-        id="url"
-        name="url"
-        onChange={(e) => onChanegeInput(e, "url")}
-      />
-      <Button
-        onClick={loc ? btnUpdateFunc : btnFunction}
-        btnText={loc ? "Edit" : "Add"}
-      />
+      <Input value={product.name} type="text" placeholder="ürün ekle" id="name" name="name" onChange={(e) => onChanegeInput(e, "name")} />
+      <Input value={product.price} type="text" placeholder="FiyatSeç" id="price" name="price" onChange={(e) => onChanegeInput(e, "price")} />
+      <Input type="file" placeholder="Resim seç" id="url" name="url" onChange={(e) => onChanegeInput(e, "url")} />
+      <Button onClick={loc ? btnUpdateFunc : btnFunction} btnText={loc ? "Edit" : "Add"} />
     </>
   );
-  const filteredItems = data.filter((item: any) =>
-    item.name.toLowerCase().includes(keyword.toLowerCase())
-  );
+  const filteredItems = data.filter((item: any) => item.name.toLowerCase().includes(keyword.toLowerCase()));
 
   return (
     <div>
